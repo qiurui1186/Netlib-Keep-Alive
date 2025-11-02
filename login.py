@@ -2,17 +2,8 @@ import os
 import time
 from playwright.sync_api import sync_playwright
 
-# 从环境变量解析多个账号
-accounts_env = os.environ.get("SITE_ACCOUNTS", "")
-accounts = []
-
-for item in accounts_env.split(";"):
-    if item.strip():
-        try:
-            username, password = item.split(",", 1)
-            accounts.append({"username": username.strip(), "password": password.strip()})
-        except ValueError:
-            print(f"⚠️ 忽略格式错误的账号项: {item}")
+UZANTONOMO = os.environ.get("UZANTONOMO", "")
+PASVORTO = os.environ.get("PASVORTO", "")
 
 fail_msgs = [
     "Invalid credentials.",
@@ -63,9 +54,8 @@ def login_account(playwright, USER, PWD):
 
 def run():
     with sync_playwright() as playwright:
-        for acc in accounts:
-            login_account(playwright, acc["username"], acc["password"])
-            time.sleep(2)
+        login_account(playwright, UZANTONOMO, PASVORTO)
+        time.sleep(2)
 
 if __name__ == "__main__":
     run()
