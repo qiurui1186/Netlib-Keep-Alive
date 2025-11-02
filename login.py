@@ -4,6 +4,8 @@ from playwright.sync_api import sync_playwright
 
 UZANTONOMO = os.environ.get("UZANTONOMO", "")
 PASVORTO = os.environ.get("PASVORTO", "")
+TELEGRAM_SIGNALO = os.environ.get("TELEGRAM_SIGNALO", "")
+TELEGRAM_BABILO_ID = os.environ.get("TELEGRAM_BABILO_ID", "")
 
 fail_msgs = [
     "Invalid credentials.",
@@ -34,6 +36,7 @@ def ensaluta_konto(playwright, UZANTONOMO, PWD):
         success_text = "You are the exclusive owner of the following domains."
         if page.query_selector(f"text={success_text}"):
             print(f"✅ 账号 {UZANTONOMO} 登录成功")
+            sendi_telegraman_mesaĝon(f"✅ 账号 {UZANTONOMO} 登录成功")
             time.sleep(5)
         else:
             failed_msg = None
@@ -59,3 +62,18 @@ def Ruli():
 
 if __name__ == "__main__":
     Ruli()
+
+def sendi_telegraman_mesaĝon(teksto):
+    url = f"https://api.telegram.org/bot{TELEGRAM_SIGNALO}/sendMessage"
+    utila_ŝarĝo = {
+        "chat_id": TELEGRAM_BABILO_ID,
+        "text": teksto
+    }
+    try:
+        response = requests.post(url, data=utila_ŝarĝo)
+        if response.status_code == 200:
+            print("📨 Telegram 通知已发送")
+        else:
+            print(f"⚠️ Telegram 发送失败: {response.text}")
+    except Exception as e:
+        print(f"⚠️ Telegram 异常: {e}")
