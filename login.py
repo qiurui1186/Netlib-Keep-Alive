@@ -79,7 +79,7 @@ def sendi_telegraman_mesaĝon(teksto):
 
 def sendi_kaj_presi(mesaĝo):
     print(mesaĝo)
-    sendi_telegram_mesaĝon(mesaĝo)
+    sendi_telegraman_mesaĝon(mesaĝo)
 
 def Ruli():
     with sync_playwright() as playwright:
