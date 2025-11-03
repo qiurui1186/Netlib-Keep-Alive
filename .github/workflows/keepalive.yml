@@ -2,8 +2,7 @@ name: Teni Saluton Viva
 
 on:
   schedule:
-    - cron: "0 2 2 * *
-" 
+    - cron: "0 2 2 * *" 
   workflow_dispatch:       # 支持手动触发
 
 jobs:
